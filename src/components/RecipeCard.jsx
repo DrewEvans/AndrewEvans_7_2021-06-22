@@ -8,7 +8,7 @@ const RecipeCard = ({ recipe }) => {
 
 	return (
 		<>
-			<div className="img-block"></div>
+			<div key={recipe.id} className="img-block"></div>
 			<div className="card-body">
 				<h2 className="card-title">{recipe.name}</h2>
 				<p className="duration">
