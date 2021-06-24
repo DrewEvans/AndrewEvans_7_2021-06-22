@@ -13,8 +13,6 @@ const ApplianceDropdown = (ingredients) => {
 			: null;
 	};
 
-	console.log(searchValue);
-
 	const handleClick = (e) => {
 		if (e.isTrusted) {
 			setOpenDialog(true);
@@ -45,13 +43,25 @@ const ApplianceDropdown = (ingredients) => {
 			<div className="item-container">
 				{ingredients && openDialog && (
 					<ul>
-						{ingredients.ingredients.map((ingredient, i) => {
-							return (
-								<li key={i} className="list-item">
-									{ingredient}
-								</li>
-							);
-						})}
+						{ingredients.ingredients
+							.filter((ingredient) => {
+								if (searchValue == "" || searchValue == null) {
+									return ingredient;
+								} else if (
+									ingredient
+										.toLowerCase()
+										.includes(searchValue.toLowerCase())
+								) {
+									return ingredient;
+								}
+							})
+							.map((ingredient, i) => {
+								return (
+									<li key={i} className="list-item">
+										{ingredient}
+									</li>
+								);
+							})}
 					</ul>
 				)}
 			</div>
