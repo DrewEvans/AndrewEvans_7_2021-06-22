@@ -13,7 +13,7 @@ const RecipeCard = ({ recipe }) => {
 				<h2 className="card-title">{recipe.name}</h2>
 				<p className="duration">
 					<span className="clock-icon">{clockIcon}</span>{" "}
-					{recipe.time} min
+					{recipe.time}min
 				</p>
 			</div>
 			<div className="details">

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-const DropdownSearch = (ingredients, intValue, stringValue) => {
+const UtensilDropdown = (ingredients) => {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [searchValue, setSearchValue] = useState(null);
 
@@ -32,11 +32,11 @@ const DropdownSearch = (ingredients, intValue, stringValue) => {
 	const angleDown = <FontAwesomeIcon icon={faAngleDown} />;
 
 	return (
-		<div className={`dropdown-btn ${intValue}`} onClick={handleClick}>
+		<div className="utensil dropdown-btn" onClick={handleClick}>
 			<div>
 				<input
 					type="text"
-					placeholder={stringValue}
+					placeholder="Ustensiles"
 					onChange={handleChange}
 				/>
 				{!openDialog && <span>{angleDown}</span>}
@@ -59,4 +59,4 @@ const DropdownSearch = (ingredients, intValue, stringValue) => {
 	);
 };
 
-export default DropdownSearch;
+export default UtensilDropdown;

@@ -3,7 +3,9 @@ import {
 	Logo,
 	SearchBar,
 	RecipeCard,
-	DropdownSearch,
+	IngredientDropdown,
+	UtensilDropdown,
+	ApplianceDropdown,
 } from "./components/index";
 import {
 	uniqueIngredients,
@@ -15,27 +17,21 @@ import styled from "styled-components";
 
 import "./App.scss";
 
-const Wrapper = styled.main`
+const MainWrapper = styled.main`
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
 `;
 
 function App() {
-	const onChange = (e) => {
-		console.log(e);
-	};
-	uniqueIngredients(recipes);
-	// uniqueIngredients(recipes);
-	uniqueUtensils(recipes);
-	uniqueAppliances(recipes);
-
 	return (
 		<>
 			<Logo />
 			<SearchBar />
-			<DropdownSearch onChange={onChange} />
-			<Wrapper>
+			<IngredientDropdown ingredients={uniqueIngredients(recipes)} />
+			<ApplianceDropdown ingredients={uniqueAppliances(recipes)} />
+			<UtensilDropdown ingredients={uniqueUtensils(recipes)} />
+			<MainWrapper>
 				{recipes.map((recipe) => {
 					return (
 						<div className="card" key={recipe.id}>
@@ -43,7 +39,7 @@ function App() {
 						</div>
 					);
 				})}
-			</Wrapper>
+			</MainWrapper>
 		</>
 	);
 }
