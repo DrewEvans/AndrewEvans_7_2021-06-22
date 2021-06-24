@@ -6,6 +6,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 const IngredientDropdown = (ingredients) => {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [searchValue, setSearchValue] = useState(null);
+	const [searchItem, setSearchItem] = useState([]);
 
 	const handleChange = (e) => {
 		e.isTrusted
@@ -26,6 +27,23 @@ const IngredientDropdown = (ingredients) => {
 		}
 	};
 
+	const addSearchTerm = (e) => {
+		e.preventDefault();
+		const newSearchTerm = e.target.innerHTML;
+
+		setSearchItem((prevSearchItem) => {
+			return [
+				{
+					type: "ingredient",
+					text: newSearchTerm,
+					key: searchItem.length,
+				},
+				...prevSearchItem,
+			];
+		});
+	};
+
+	console.log(searchItem);
 	const angleUp = <FontAwesomeIcon icon={faAngleUp} />;
 	const angleDown = <FontAwesomeIcon icon={faAngleDown} />;
 
@@ -57,7 +75,12 @@ const IngredientDropdown = (ingredients) => {
 							})
 							.map((ingredient, i) => {
 								return (
-									<li key={i} className="list-item">
+									<li
+										key={i}
+										className="list-item"
+										value={ingredient}
+										onClick={addSearchTerm}
+									>
 										{ingredient}
 									</li>
 								);
