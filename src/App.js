@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Logo,
 	SearchBar,
@@ -6,6 +6,7 @@ import {
 	IngredientDropdown,
 	UtensilDropdown,
 	ApplianceDropdown,
+	FilterTags,
 } from "./components/index";
 import {
 	uniqueIngredients,
@@ -24,13 +25,42 @@ const MainWrapper = styled.main`
 `;
 
 function App() {
+	const [searchItem, setSearchItem] = useState([]);
+
+	const addSearchTerm = (e) => {
+		e.preventDefault();
+		const newSearchTerm = e.target.innerHTML;
+		const valueType = e.target.getAttribute("value");
+		setSearchItem((prevSearchItem) => {
+			return [
+				{
+					type: valueType,
+					text: newSearchTerm,
+					key: searchItem.length,
+				},
+				...prevSearchItem,
+			];
+		});
+	};
+
+	console.log(searchItem);
 	return (
 		<>
 			<Logo />
 			<SearchBar />
-			<IngredientDropdown ingredients={uniqueIngredients(recipes)} />
-			<ApplianceDropdown ingredients={uniqueAppliances(recipes)} />
-			<UtensilDropdown ingredients={uniqueUtensils(recipes)} />
+			<FilterTags searchItem={searchItem} />
+			<IngredientDropdown
+				ingredients={uniqueIngredients(recipes)}
+				addSearchTerm={addSearchTerm}
+			/>
+			<ApplianceDropdown
+				appliances={uniqueAppliances(recipes)}
+				addSearchTerm={addSearchTerm}
+			/>
+			<UtensilDropdown
+				utensils={uniqueUtensils(recipes)}
+				addSearchTerm={addSearchTerm}
+			/>
 			<MainWrapper>
 				{recipes.map((recipe) => {
 					return (

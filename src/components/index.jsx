@@ -4,3 +4,4 @@ export { default as Logo } from "./Logo";
 export { default as IngredientDropdown } from "./IngredientDropdown";
 export { default as UtensilDropdown } from "./UtensilDropdown";
 export { default as ApplianceDropdown } from "./ApplianceDropdown";
+export { default as FilterTags } from "./FilterTags";

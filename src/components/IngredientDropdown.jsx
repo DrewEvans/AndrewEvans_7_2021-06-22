@@ -1,17 +1,16 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-const IngredientDropdown = (ingredients) => {
+const IngredientDropdown = (props) => {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [searchValue, setSearchValue] = useState(null);
-	const [searchItem, setSearchItem] = useState([]);
 
 	const handleChange = (e) => {
-		e.isTrusted
-			? (setSearchValue(e.target.value), setOpenDialog(true))
-			: null;
+		setSearchValue(e.target.value);
+		setOpenDialog(true);
 	};
 
 	const handleClick = (e) => {
@@ -27,23 +26,6 @@ const IngredientDropdown = (ingredients) => {
 		}
 	};
 
-	const addSearchTerm = (e) => {
-		e.preventDefault();
-		const newSearchTerm = e.target.innerHTML;
-
-		setSearchItem((prevSearchItem) => {
-			return [
-				{
-					type: "ingredient",
-					text: newSearchTerm,
-					key: searchItem.length,
-				},
-				...prevSearchItem,
-			];
-		});
-	};
-
-	console.log(searchItem);
 	const angleUp = <FontAwesomeIcon icon={faAngleUp} />;
 	const angleDown = <FontAwesomeIcon icon={faAngleDown} />;
 
@@ -59,9 +41,9 @@ const IngredientDropdown = (ingredients) => {
 				{openDialog && <span>{angleUp}</span>}
 			</div>
 			<div className="item-container">
-				{ingredients && openDialog && (
+				{props && openDialog && (
 					<ul>
-						{ingredients.ingredients
+						{props.ingredients
 							.filter((ingredient) => {
 								if (searchValue == "" || searchValue == null) {
 									return ingredient;
@@ -78,8 +60,8 @@ const IngredientDropdown = (ingredients) => {
 									<li
 										key={i}
 										className="list-item"
-										value={ingredient}
-										onClick={addSearchTerm}
+										value="ingredient"
+										onClick={props.addSearchTerm}
 									>
 										{ingredient}
 									</li>

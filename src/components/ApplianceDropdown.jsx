@@ -1,16 +1,16 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-const ApplianceDropdown = (ingredients) => {
+const ApplianceDropdown = (props) => {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [searchValue, setSearchValue] = useState(null);
 
 	const handleChange = (e) => {
-		e.isTrusted
-			? (setSearchValue(e.target.value), setOpenDialog(true))
-			: null;
+		setSearchValue(e.target.value);
+		setOpenDialog(true);
 	};
 
 	const handleClick = (e) => {
@@ -41,24 +41,29 @@ const ApplianceDropdown = (ingredients) => {
 				{openDialog && <span>{angleUp}</span>}
 			</div>
 			<div className="item-container">
-				{ingredients && openDialog && (
+				{props && openDialog && (
 					<ul>
-						{ingredients.ingredients
-							.filter((ingredient) => {
+						{props.appliances
+							.filter((appliance) => {
 								if (searchValue == "" || searchValue == null) {
-									return ingredient;
+									return appliance;
 								} else if (
-									ingredient
+									appliance
 										.toLowerCase()
 										.includes(searchValue.toLowerCase())
 								) {
-									return ingredient;
+									return appliance;
 								}
 							})
-							.map((ingredient, i) => {
+							.map((appliance, i) => {
 								return (
-									<li key={i} className="list-item">
-										{ingredient}
+									<li
+										key={i}
+										value="appliance"
+										className="list-item"
+										onClick={props.addSearchTerm}
+									>
+										{appliance}
 									</li>
 								);
 							})}
