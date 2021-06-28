@@ -28,7 +28,6 @@ function App() {
 	const [searchItem, setSearchItem] = useState([]);
 
 	const addSearchTerm = (e) => {
-		e.preventDefault();
 		const newSearchTerm = e.target.innerHTML;
 		const valueType = e.target.getAttribute("value");
 		setSearchItem((prevSearchItem) => {
@@ -43,12 +42,19 @@ function App() {
 		});
 	};
 
+	const removeSearchTerm = (e) => {
+		console.log(e);
+	};
+
 	console.log(searchItem);
 	return (
 		<>
 			<Logo />
 			<SearchBar />
-			<FilterTags searchItem={searchItem} />
+			<FilterTags
+				searchItem={searchItem}
+				removeSearchTerm={removeSearchTerm}
+			/>
 			<IngredientDropdown
 				ingredients={uniqueIngredients(recipes)}
 				addSearchTerm={addSearchTerm}

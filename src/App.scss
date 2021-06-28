@@ -40,6 +40,46 @@ body {
 	}
 }
 
+//filter tags
+
+.tag-container {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	margin: 2em;
+
+	.tag {
+		color: white;
+		font-weight: 600;
+		font-size: 0.9em;
+
+		display: flex;
+		align-items: center;
+		margin: 0.35em;
+
+		height: 30px;
+
+		border-radius: 5px;
+
+		p {
+			padding: 0.35em;
+		}
+		span {
+			padding: 0.5em;
+		}
+	}
+
+	.ingredient-tag {
+		background-color: #3282f7;
+	}
+	.utensil-tag {
+		background-color: #ed6454;
+	}
+	.appliance-tag {
+		background-color: #68d9a4;
+	}
+}
+
 //dropdown Search
 
 .dropdown-btn {
@@ -47,7 +87,7 @@ body {
 	justify-content: flex-start;
 	flex-direction: column;
 	background-color: #3282f7;
-	border-radius: 2px;
+	border-radius: 5px;
 	width: 180px;
 	margin: 2em 4em;
 
@@ -61,7 +101,7 @@ body {
 		height: 45px;
 		border: none;
 		background-color: #3282f7;
-		border-radius: 2px;
+		border-radius: 5px;
 	}
 	span {
 		color: white;

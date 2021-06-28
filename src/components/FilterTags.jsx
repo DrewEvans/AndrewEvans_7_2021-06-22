@@ -4,22 +4,60 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 const FilterTags = (props) => {
-	const cross = <FontAwesomeIcon icon={faTimesCircle} />;
-
 	const { searchItem } = props;
-
-	console.log(searchItem.length);
+	const cross = <FontAwesomeIcon icon={faTimesCircle} />;
 
 	return (
 		<>
-			{searchItem.length > 0 &&
-				searchItem.map((tag) => {
-					console.log(tag);
-					<div>
-						<p>{tag.text}</p>
-						<span>{cross}</span>
-					</div>;
-				})}
+			{searchItem.length ? (
+				<div className="tag-container">
+					{searchItem.map((tag) => {
+						const { type, text, key } = tag;
+
+						if (type === "ingredient") {
+							return (
+								<div key={key} className="ingredient-tag tag">
+									<p className="item-text">{text}</p>
+									<span
+										onClick={props.removeSearchTerm}
+										className="close-cross"
+									>
+										{cross}
+									</span>
+								</div>
+							);
+						}
+
+						if (type === "appliance") {
+							return (
+								<div key={key} className="appliance-tag tag">
+									<p className="item-text">{text}</p>
+									<span
+										onClick={props.removeSearchTerm}
+										className="close-cross"
+									>
+										{cross}
+									</span>
+								</div>
+							);
+						}
+
+						if (type === "utensil") {
+							return (
+								<div key={key} className="utensil-tag tag">
+									<p className="item-text">{text}</p>
+									<span
+										onClick={props.removeSearchTerm}
+										className="close-cross"
+									>
+										{cross}
+									</span>
+								</div>
+							);
+						}
+					})}
+				</div>
+			) : null}
 		</>
 	);
 };
