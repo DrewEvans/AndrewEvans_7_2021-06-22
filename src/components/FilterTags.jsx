@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 const FilterTags = (props) => {
-	const { searchItem } = props;
+	const { searchItem, removeSearchTerm } = props;
 	const cross = <FontAwesomeIcon icon={faTimesCircle} />;
 
 	return (
@@ -19,7 +19,7 @@ const FilterTags = (props) => {
 								<div key={key} className="ingredient-tag tag">
 									<p className="item-text">{text}</p>
 									<span
-										onClick={props.removeSearchTerm}
+										onClick={() => removeSearchTerm(key)}
 										className="close-cross"
 									>
 										{cross}
@@ -33,7 +33,7 @@ const FilterTags = (props) => {
 								<div key={key} className="appliance-tag tag">
 									<p className="item-text">{text}</p>
 									<span
-										onClick={props.removeSearchTerm}
+										onClick={() => removeSearchTerm(key)}
 										className="close-cross"
 									>
 										{cross}
@@ -47,7 +47,7 @@ const FilterTags = (props) => {
 								<div key={key} className="utensil-tag tag">
 									<p className="item-text">{text}</p>
 									<span
-										onClick={props.removeSearchTerm}
+										onClick={() => removeSearchTerm(key)}
 										className="close-cross"
 									>
 										{cross}

@@ -42,8 +42,10 @@ function App() {
 		});
 	};
 
-	const removeSearchTerm = (e) => {
-		console.log(e);
+	const removeSearchTerm = (key) => {
+		setSearchItem((prevSearchItem) => {
+			return prevSearchItem.filter((searchItem) => searchItem.key != key);
+		});
 	};
 
 	console.log(searchItem);
