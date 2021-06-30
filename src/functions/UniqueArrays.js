@@ -26,5 +26,10 @@ const uniqueAppliances = (arr) => {
 
 	return unique;
 };
+const uniqueRecipes = (arr) => {
+	let unique = [...new Set(arr.map((item) => item.name))];
 
-export { uniqueIngredients, uniqueUtensils, uniqueAppliances };
+	return unique;
+};
+
+export { uniqueIngredients, uniqueUtensils, uniqueAppliances, uniqueRecipes };

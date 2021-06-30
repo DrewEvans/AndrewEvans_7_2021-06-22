@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Logo,
 	SearchBar,
@@ -12,7 +12,9 @@ import {
 	uniqueIngredients,
 	uniqueAppliances,
 	uniqueUtensils,
+	uniqueRecipes,
 } from "./functions/UniqueArrays";
+import { searchRecipes } from "./functions/testFilter";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
@@ -26,10 +28,29 @@ const MainWrapper = styled.main`
 
 function App() {
 	const [searchItem, setSearchItem] = useState([]);
+	const [isSearching, setIsSearching] = useState(false);
+	const [primarySearch, setPrimarySearch] = useState();
+	const [recipeList, setRecipeList] = useState([]);
+
+	useEffect(() => {
+		setRecipeList(recipes);
+	}, []);
 
 	const addSearchTerm = (e) => {
+		console.log(e.code);
 		const newSearchTerm = e.target.innerHTML;
 		const valueType = e.target.getAttribute("value");
+
+		e.type === "change"
+			? (setPrimarySearch(e.target.value), setIsSearching(false))
+			: null;
+
+		if (e.code === "Enter") {
+			setIsSearching(true);
+			setRecipeList(searchRecipes(recipes, primarySearch));
+		}
+		null;
+
 		setSearchItem((prevSearchItem) => {
 			return [
 				{
@@ -48,11 +69,28 @@ function App() {
 		});
 	};
 
-	console.log(searchItem);
+	console.log(recipeList);
+
+	console.log(`user searching: ${isSearching}`);
+
+	if (recipeList.length === 0 && isSearching === true) {
+		console.log("display no results component");
+	}
+
+	isSearching
+		? console.log(searchRecipes(recipes, primarySearch))
+		: console.log("all Recipes");
+
 	return (
 		<>
 			<Logo />
-			<SearchBar />
+			<SearchBar
+				ingredients={uniqueIngredients(recipes)}
+				appliances={uniqueAppliances(recipes)}
+				utensils={uniqueUtensils(recipes)}
+				recipes={uniqueRecipes(recipes)}
+				addSearchTerm={addSearchTerm}
+			/>
 			<FilterTags
 				searchItem={searchItem}
 				removeSearchTerm={removeSearchTerm}
