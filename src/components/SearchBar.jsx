@@ -16,7 +16,12 @@ const SearchBar = (props) => {
 				onChange={props.addSearchTerm}
 				onKeyDown={props.addSearchTerm}
 			/>
-			<button>{searchIcon}</button>
+			<button
+				onClick={props.addSearchTerm}
+				onKeyDown={props.addSearchTerm}
+			>
+				{searchIcon}
+			</button>
 		</div>
 	);
 };

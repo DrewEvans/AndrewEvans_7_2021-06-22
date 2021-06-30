@@ -62,6 +62,7 @@ const IngredientDropdown = (props) => {
 										className="list-item"
 										value="ingredient"
 										onClick={props.addSearchTerm}
+										style={{ display: "absolute" }}
 									>
 										{ingredient}
 									</li>

@@ -37,6 +37,7 @@ body {
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 		padding: 10px;
+		cursor: pointer;
 	}
 }
 
@@ -90,6 +91,7 @@ body {
 	border-radius: 5px;
 	width: 180px;
 	margin: 2em 4em;
+	cursor: pointer;
 
 	input {
 		justify-self: flex-start;
@@ -102,6 +104,7 @@ body {
 		border: none;
 		background-color: #3282f7;
 		border-radius: 5px;
+		cursor: pointer;
 	}
 	span {
 		color: white;

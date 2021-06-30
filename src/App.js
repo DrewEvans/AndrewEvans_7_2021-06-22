@@ -26,6 +26,15 @@ const MainWrapper = styled.main`
 	flex-wrap: wrap;
 `;
 
+const BtnWrapper = styled.div`
+	display: inline-block;
+	flex-direction: row;
+	justify-content: flex start;
+	flex-wrap: wrap;
+	margin-top: 0em;
+	z-index: 1000;
+`;
+
 function App() {
 	const [searchItem, setSearchItem] = useState([]);
 	const [isSearching, setIsSearching] = useState(false);
@@ -37,7 +46,7 @@ function App() {
 	}, []);
 
 	const addSearchTerm = (e) => {
-		console.log(e.code);
+		console.log(e);
 		const newSearchTerm = e.target.innerHTML;
 		const valueType = e.target.getAttribute("value");
 
@@ -95,20 +104,27 @@ function App() {
 				searchItem={searchItem}
 				removeSearchTerm={removeSearchTerm}
 			/>
-			<IngredientDropdown
-				ingredients={uniqueIngredients(recipes)}
-				addSearchTerm={addSearchTerm}
-			/>
-			<ApplianceDropdown
-				appliances={uniqueAppliances(recipes)}
-				addSearchTerm={addSearchTerm}
-			/>
-			<UtensilDropdown
-				utensils={uniqueUtensils(recipes)}
-				addSearchTerm={addSearchTerm}
-			/>
+			<BtnWrapper>
+				<IngredientDropdown
+					ingredients={uniqueIngredients(recipeList)}
+					addSearchTerm={addSearchTerm}
+				/>
+			</BtnWrapper>
+			<BtnWrapper>
+				<ApplianceDropdown
+					appliances={uniqueAppliances(recipeList)}
+					addSearchTerm={addSearchTerm}
+				/>
+			</BtnWrapper>
+			<BtnWrapper>
+				<UtensilDropdown
+					utensils={uniqueUtensils(recipeList)}
+					addSearchTerm={addSearchTerm}
+				/>
+			</BtnWrapper>
+
 			<MainWrapper>
-				{recipes.map((recipe) => {
+				{recipeList.map((recipe) => {
 					return (
 						<div className="card" key={recipe.id}>
 							<RecipeCard recipe={recipe} />
