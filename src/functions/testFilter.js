@@ -51,11 +51,13 @@ const tagSearch = (object, searchItem) => {
 			console.log("do an ingredient filter");
 			results = object
 				.filter((obj) => {
-					obj.ingredients.filter((el) =>
-						el.ingredient
-							.toLowerCase()
-							.includes(ingredientTags.toLowerCase())
-					).length > 0;
+					return (
+						obj.ingredients.filter((el) =>
+							el.ingredient
+								.toLowerCase()
+								.includes(ingredientTags.toLowerCase())
+						).length > 0
+					);
 				})
 				.map((obj) => {
 					console.log(obj);
@@ -66,7 +68,7 @@ const tagSearch = (object, searchItem) => {
 			console.log("do an appliance filter");
 			results = object
 				.filter((obj) => {
-					obj.appliance
+					return obj.appliance
 						.toLowerCase()
 						.includes(applianceTags.toLowerCase());
 				})
@@ -79,7 +81,7 @@ const tagSearch = (object, searchItem) => {
 		if (searchItem.length > 0 && ustensilTags.length > 0) {
 			results = object
 				.filter((obj) => {
-					obj.ustensils.some((ustensil) =>
+					return obj.ustensils.some((ustensil) =>
 						ustensil
 							.toLowerCase()
 							.includes(ustensilTags.toLowerCase())
