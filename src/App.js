@@ -14,7 +14,7 @@ import {
 	uniqueUtensils,
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
-import { searchRecipes } from "./functions/testFilter";
+import { searchRecipes, tagSearch } from "./functions/testFilter";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
@@ -37,6 +37,7 @@ const BtnWrapper = styled.div`
 
 function App() {
 	const [searchItem, setSearchItem] = useState([]);
+	const [tagSelected, setTagSelected] = useState();
 	const [isSearching, setIsSearching] = useState(false);
 	const [primarySearch, setPrimarySearch] = useState();
 	const [recipeList, setRecipeList] = useState([]);
@@ -46,19 +47,10 @@ function App() {
 	}, []);
 
 	const addSearchTerm = (e) => {
-		console.log(e);
 		const newSearchTerm = e.target.innerHTML;
 		const valueType = e.target.getAttribute("value");
 
-		e.type === "change"
-			? (setPrimarySearch(e.target.value), setIsSearching(false))
-			: null;
-
-		if (e.code === "Enter") {
-			setIsSearching(true);
-			setRecipeList(searchRecipes(recipes, primarySearch));
-		}
-		null;
+		setTagSelected(true);
 
 		setSearchItem((prevSearchItem) => {
 			return [
@@ -78,7 +70,17 @@ function App() {
 		});
 	};
 
-	console.log(recipeList);
+	const handleSearchInput = (e) => {
+		e.type === "change"
+			? (setPrimarySearch(e.target.value), setIsSearching(false))
+			: null;
+
+		if (e.code === "Enter") {
+			setIsSearching(true);
+			setRecipeList(searchRecipes(recipes, primarySearch));
+		}
+		null;
+	};
 
 	console.log(`user searching: ${isSearching}`);
 
@@ -86,9 +88,11 @@ function App() {
 		console.log("display no results component");
 	}
 
-	isSearching
-		? console.log(searchRecipes(recipes, primarySearch))
-		: console.log("all Recipes");
+	tagSelected ? console.log(tagSearch(recipeList, searchItem)) : null;
+
+	// isSearching
+	// 	? console.log(searchRecipes(recipes, primarySearch, searchItem))
+	// 	: console.log("all Recipes");
 
 	return (
 		<>
@@ -98,7 +102,7 @@ function App() {
 				appliances={uniqueAppliances(recipes)}
 				utensils={uniqueUtensils(recipes)}
 				recipes={uniqueRecipes(recipes)}
-				addSearchTerm={addSearchTerm}
+				handleSearchInput={handleSearchInput}
 			/>
 			<FilterTags
 				searchItem={searchItem}

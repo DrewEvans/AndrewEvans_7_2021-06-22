@@ -13,8 +13,8 @@ const SearchBar = (props) => {
 				className="form-control"
 				placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
 				aria-label="Search Bar"
-				onChange={props.addSearchTerm}
-				onKeyDown={props.addSearchTerm}
+				onChange={props.handleSearchInput}
+				onKeyDown={props.handleSearchInput}
 			/>
 			<button
 				onClick={props.addSearchTerm}
