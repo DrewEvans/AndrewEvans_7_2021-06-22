@@ -44,31 +44,67 @@ function App() {
 	const [primarySearch, setPrimarySearch] = useState();
 	const [recipeList, setRecipeList] = useState([]);
 
-	useEffect(() => {
-		setRecipeList(recipes);
-	}, []);
+	// useEffect(() => {
+	// 	setRecipeList(recipes);
+	// }, []);
 
 	useEffect(() => {
-		console.log(primarySearch);
-		console.log(searchItem);
+		setRecipeList(recipes);
+		// console.log(primarySearch);
+		// console.log(searchItem);
+		console.log("Change in the force");
 		const event = new Event("submit");
 
 		if (!searchItem.length && !primarySearch) {
+			setRecipeList(recipes);
 			console.log(`no tags or prime search`);
 		}
 
 		if (!searchItem.length && !!primarySearch) {
 			if (primarySearch.length > 2) {
+				handleSearchInput(event, primarySearch);
 				console.log(`no tags but prime search`);
+			} else setRecipeList(recipes);
+		}
+
+		if (tagSelected && !primarySearch) {
+			setTagSelected(false);
+			setRecipeList(tagSearch(recipeList, searchItem));
+			console.log("tags only");
+		}
+
+		if (tagSelected && isSearching) {
+			setTagSelected(false);
+			setIsSearching(false);
+			console.log(primarySearch.length);
+			if (primarySearch.length > 2) {
+				// handleSearchInput(event, primarySearch);
+				setRecipeList(tagSearch(recipeList, searchItem));
+				console.log("new both axis");
+			}
+			setRecipeList(recipes);
+		}
+
+		console.log(!primarySearch);
+		console.log(!!primarySearch);
+		if (tagRemoved && !primarySearch) {
+			let tagCount = searchItem.length;
+			setTagRemoved(false);
+			if (tagCount > 0) {
+				setRecipeList(tagSearch(recipes, searchItem));
+				console.log("tags reset");
 			}
 		}
 
-		if (!!searchItem.length && !!primarySearch) {
-			if (primarySearch.length > 2) {
-				console.log(`tags and prime length = true`);
-			} else console.log(`tags but no prime failed`);
-		}
-	}, [searchItem, primarySearch]);
+		// if (!!searchItem.length && !!primarySearch) {
+		// 	if (primarySearch.length > 2) {
+		// 		handleSearchInput(event, primarySearch);
+		// 		setRecipeList(tagSearch(recipeList, searchItem));
+		// 		console.log(`tags and prime length = true`);
+		// 	} else console.log("failed prime but tags");
+		// 	setRecipeList(recipes);
+		// }
+	}, [searchItem]);
 
 	const addSearchTerm = (e) => {
 		const newSearchTerm = e.target.innerHTML;
@@ -95,20 +131,25 @@ function App() {
 		});
 	};
 
-	if (tagRemoved) {
-		setTagRemoved(false);
-	}
-	if (tagSelected) {
-		setRecipeList(tagSearch(recipeList, searchItem));
-		setTagSelected(false);
-	}
+	// if (tagRemoved) {
+	// 	setTagRemoved(false);
+	// 	setRecipeList(tagSearch(recipes, searchItem));
+	// 	console.log("fired");
+	// }
+	// if (tagSelected) {
+	// 	setRecipeList(tagSearch(recipeList, searchItem));
+	// 	setTagSelected(false);
+	// }
+
+	// console.log(tagSelected);
 
 	const handleSearchInput = (e, term) => {
-		e.type === "change"
-			? (setPrimarySearch(term), setIsSearching(false))
-			: null;
+		if (e.type === "change") {
+			setPrimarySearch(term);
+			// setIsSearching(false);
+		}
 
-		if (e.code === "Enter") {
+		if (e.code === "Enter" || e.type === "submit") {
 			setIsSearching(true);
 			setRecipeList(searchRecipes(recipes, primarySearch));
 		}
@@ -119,7 +160,8 @@ function App() {
 	// if (recipeList.length === 0 && isSearching === true) {
 	// 	console.log("display no results component");
 	// }
-	console.log(isSearching);
+	// console.log(`user isSearching: ${isSearching}`);
+	// console.log(tagRemoved);
 
 	// isSearching
 	// 	? console.log(searchRecipes(recipes, primarySearch, searchItem))
