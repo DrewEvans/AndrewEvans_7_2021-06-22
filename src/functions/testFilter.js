@@ -48,7 +48,6 @@ const tagSearch = (object, searchItem) => {
 
 	if (searchItem) {
 		if (searchItem.length > 0 && ingredientTags.length > 0) {
-			console.log("do an ingredient filter");
 			results = object
 				.filter((obj) => {
 					return (
@@ -60,12 +59,10 @@ const tagSearch = (object, searchItem) => {
 					);
 				})
 				.map((obj) => {
-					console.log(obj);
 					return obj;
 				});
 		}
 		if (searchItem.length > 0 && applianceTags.length > 0) {
-			console.log("do an appliance filter");
 			results = object
 				.filter((obj) => {
 					return obj.appliance
@@ -73,7 +70,6 @@ const tagSearch = (object, searchItem) => {
 						.includes(applianceTags.toLowerCase());
 				})
 				.map((obj) => {
-					console.log(obj);
 					return obj;
 				});
 		}
@@ -88,11 +84,9 @@ const tagSearch = (object, searchItem) => {
 					);
 				})
 				.map((obj) => {
-					console.log(`i got fired`);
 					return obj;
 				});
 		}
-		console.log(results);
 	}
 	return results;
 };

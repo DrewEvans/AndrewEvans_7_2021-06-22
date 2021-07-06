@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = (props) => {
+	const [term, setTerm] = useState("");
 	const searchIcon = <FontAwesomeIcon icon={faSearch} />;
+
+	const handleTerm = (e) => {
+		setTerm(e.target.value);
+		props.handleSearchInput(e, term);
+	};
 
 	return (
 		<div className="search-container">
@@ -13,8 +19,9 @@ const SearchBar = (props) => {
 				className="form-control"
 				placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
 				aria-label="Search Bar"
-				onChange={props.handleSearchInput}
-				onKeyDown={props.handleSearchInput}
+				onChange={handleTerm}
+				onKeyDown={handleTerm}
+				value={term}
 			/>
 			<button
 				onClick={props.addSearchTerm}

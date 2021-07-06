@@ -15,6 +15,7 @@ import {
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
 import { searchRecipes, tagSearch } from "./functions/testFilter";
+// import { usePrevious } from "./hooks/usePrevious";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
@@ -38,6 +39,7 @@ const BtnWrapper = styled.div`
 function App() {
 	const [searchItem, setSearchItem] = useState([]);
 	const [tagSelected, setTagSelected] = useState();
+	const [tagRemoved, setTagRemoved] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [primarySearch, setPrimarySearch] = useState();
 	const [recipeList, setRecipeList] = useState([]);
@@ -45,6 +47,28 @@ function App() {
 	useEffect(() => {
 		setRecipeList(recipes);
 	}, []);
+
+	useEffect(() => {
+		console.log(primarySearch);
+		console.log(searchItem);
+		const event = new Event("submit");
+
+		if (!searchItem.length && !primarySearch) {
+			console.log(`no tags or prime search`);
+		}
+
+		if (!searchItem.length && !!primarySearch) {
+			if (primarySearch.length > 2) {
+				console.log(`no tags but prime search`);
+			}
+		}
+
+		if (!!searchItem.length && !!primarySearch) {
+			if (primarySearch.length > 2) {
+				console.log(`tags and prime length = true`);
+			} else console.log(`tags but no prime failed`);
+		}
+	}, [searchItem, primarySearch]);
 
 	const addSearchTerm = (e) => {
 		const newSearchTerm = e.target.innerHTML;
@@ -65,30 +89,37 @@ function App() {
 	};
 
 	const removeSearchTerm = (key) => {
+		setTagRemoved(true);
 		setSearchItem((prevSearchItem) => {
 			return prevSearchItem.filter((searchItem) => searchItem.key != key);
 		});
 	};
 
-	const handleSearchInput = (e) => {
+	if (tagRemoved) {
+		setTagRemoved(false);
+	}
+	if (tagSelected) {
+		setRecipeList(tagSearch(recipeList, searchItem));
+		setTagSelected(false);
+	}
+
+	const handleSearchInput = (e, term) => {
 		e.type === "change"
-			? (setPrimarySearch(e.target.value), setIsSearching(false))
+			? (setPrimarySearch(term), setIsSearching(false))
 			: null;
 
 		if (e.code === "Enter") {
 			setIsSearching(true);
 			setRecipeList(searchRecipes(recipes, primarySearch));
 		}
-		null;
 	};
 
-	console.log(`user searching: ${isSearching}`);
+	// console.log(`user searching: ${isSearching}`);
 
-	if (recipeList.length === 0 && isSearching === true) {
-		console.log("display no results component");
-	}
-
-	tagSelected ? console.log(tagSearch(recipeList, searchItem)) : null;
+	// if (recipeList.length === 0 && isSearching === true) {
+	// 	console.log("display no results component");
+	// }
+	console.log(isSearching);
 
 	// isSearching
 	// 	? console.log(searchRecipes(recipes, primarySearch, searchItem))
