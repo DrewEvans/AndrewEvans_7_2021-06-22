@@ -40,7 +40,7 @@ function App() {
 	const [tagSelected, setTagSelected] = useState();
 	const [tagRemoved, setTagRemoved] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
-	const [primarySearch, setPrimarySearch] = useState();
+	const [primarySearch, setPrimarySearch] = useState(" ");
 	const [recipeList, setRecipeList] = useState([]);
 
 	useEffect(() => {
@@ -50,10 +50,7 @@ function App() {
 	useEffect(() => {
 		if (tagSelected) {
 			setTagSelected(false);
-			if (
-				primarySearch.length >= 3 ||
-				primarySearch.length === undefined
-			) {
+			if (primarySearch.length >= 3) {
 				setRecipeList(tagSearch(recipeList, searchItem));
 			}
 
