@@ -15,7 +15,6 @@ import {
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
 import { searchRecipes, tagSearch } from "./functions/testFilter";
-// import { usePrevious } from "./hooks/usePrevious";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
@@ -44,67 +43,56 @@ function App() {
 	const [primarySearch, setPrimarySearch] = useState();
 	const [recipeList, setRecipeList] = useState([]);
 
-	// useEffect(() => {
-	// 	setRecipeList(recipes);
-	// }, []);
-
 	useEffect(() => {
 		setRecipeList(recipes);
-		// console.log(primarySearch);
-		// console.log(searchItem);
-		console.log("Change in the force");
-		const event = new Event("submit");
+	}, []);
 
-		if (!searchItem.length && !primarySearch) {
-			setRecipeList(recipes);
-			console.log(`no tags or prime search`);
-		}
-
-		if (!searchItem.length && !!primarySearch) {
-			if (primarySearch.length > 2) {
-				handleSearchInput(event, primarySearch);
-				console.log(`no tags but prime search`);
-			} else setRecipeList(recipes);
-		}
-
-		if (tagSelected && !primarySearch) {
+	useEffect(() => {
+		if (tagSelected) {
 			setTagSelected(false);
-			setRecipeList(tagSearch(recipeList, searchItem));
-			console.log("tags only");
-		}
-
-		if (tagSelected && isSearching) {
-			setTagSelected(false);
-			setIsSearching(false);
-			console.log(primarySearch.length);
-			if (primarySearch.length > 2) {
-				// handleSearchInput(event, primarySearch);
+			if (
+				primarySearch.length >= 3 ||
+				primarySearch.length === undefined
+			) {
 				setRecipeList(tagSearch(recipeList, searchItem));
-				console.log("new both axis");
 			}
-			setRecipeList(recipes);
+
+			setRecipeList(tagSearch(recipes, searchItem));
+			// console.log("tags only");
 		}
 
-		console.log(!primarySearch);
-		console.log(!!primarySearch);
-		if (tagRemoved && !primarySearch) {
-			let tagCount = searchItem.length;
-			setTagRemoved(false);
-			if (tagCount > 0) {
+		if (tagRemoved) {
+			if (searchItem.length < 1 && primarySearch.length < 3) {
+				// console.log("no more tag remains");
+				setTagRemoved(false);
+				setRecipeList(recipes);
+			}
+			if (searchItem.length < 1 && primarySearch.length >= 3) {
+				setIsSearching(false);
+				setRecipeList(searchRecipes(recipes, primarySearch));
+			}
+
+			if (searchItem.length >= 1) {
 				setRecipeList(tagSearch(recipes, searchItem));
-				console.log("tags reset");
+			}
+
+			if (isSearching) {
+				if (primarySearch.length <= 2) {
+					setIsSearching(false);
+					setRecipeList(recipes);
+				}
+
+				if (primarySearch.length >= 3) {
+					setIsSearching(false);
+					setRecipeList(searchRecipes(recipes, primarySearch));
+				}
+			}
+
+			if (!isSearching && !!searchItem.length) {
+				console.log("fired");
 			}
 		}
-
-		// if (!!searchItem.length && !!primarySearch) {
-		// 	if (primarySearch.length > 2) {
-		// 		handleSearchInput(event, primarySearch);
-		// 		setRecipeList(tagSearch(recipeList, searchItem));
-		// 		console.log(`tags and prime length = true`);
-		// 	} else console.log("failed prime but tags");
-		// 	setRecipeList(recipes);
-		// }
-	}, [searchItem]);
+	}, [primarySearch, searchItem]);
 
 	const addSearchTerm = (e) => {
 		const newSearchTerm = e.target.innerHTML;
@@ -117,7 +105,7 @@ function App() {
 				{
 					type: valueType,
 					text: newSearchTerm,
-					key: searchItem.length,
+					key: searchItem.length + valueType,
 				},
 				...prevSearchItem,
 			];
@@ -131,41 +119,19 @@ function App() {
 		});
 	};
 
-	// if (tagRemoved) {
-	// 	setTagRemoved(false);
-	// 	setRecipeList(tagSearch(recipes, searchItem));
-	// 	console.log("fired");
-	// }
-	// if (tagSelected) {
-	// 	setRecipeList(tagSearch(recipeList, searchItem));
-	// 	setTagSelected(false);
-	// }
-
-	// console.log(tagSelected);
-
 	const handleSearchInput = (e, term) => {
-		if (e.type === "change") {
-			setPrimarySearch(term);
-			// setIsSearching(false);
-		}
+		setPrimarySearch(term);
 
-		if (e.code === "Enter" || e.type === "submit") {
+		if (term.length >= 3) {
 			setIsSearching(true);
 			setRecipeList(searchRecipes(recipes, primarySearch));
 		}
+
+		if (term.length <= 2) {
+			setIsSearching(true);
+			setRecipeList(recipes);
+		}
 	};
-
-	// console.log(`user searching: ${isSearching}`);
-
-	// if (recipeList.length === 0 && isSearching === true) {
-	// 	console.log("display no results component");
-	// }
-	// console.log(`user isSearching: ${isSearching}`);
-	// console.log(tagRemoved);
-
-	// isSearching
-	// 	? console.log(searchRecipes(recipes, primarySearch, searchItem))
-	// 	: console.log("all Recipes");
 
 	return (
 		<>

@@ -28,7 +28,6 @@ const searchRecipes = (object, string) => {
 		}
 		return results;
 	}
-	null;
 };
 
 const tagSearch = (object, searchItem) => {

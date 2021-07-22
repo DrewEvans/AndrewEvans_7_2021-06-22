@@ -20,7 +20,7 @@ const SearchBar = (props) => {
 				placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
 				aria-label="Search Bar"
 				onChange={handleTerm}
-				onKeyDown={handleTerm}
+				// onKeyDown={handleTerm}
 				value={term}
 			/>
 			<button
