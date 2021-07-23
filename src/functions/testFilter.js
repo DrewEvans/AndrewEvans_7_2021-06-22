@@ -37,8 +37,12 @@ const tagSearch = (object, searchItem) => {
 	let ustensilTags = [];
 	let applianceTags = [];
 
-	searchItem.forEach((item) => {
+	console.log(searchItem);
+
+	Array.from(searchItem).forEach((item) => {
 		const { type, text } = item;
+
+		console.log(item.type);
 
 		type === "ingredient" ? (ingredientTags = text) : null;
 		type === "utensil" ? (ustensilTags = text) : null;
