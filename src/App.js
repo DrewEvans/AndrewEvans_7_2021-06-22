@@ -52,41 +52,53 @@ function App() {
 			setTagSelected(false);
 			if (primarySearch.length >= 3) {
 				setRecipeList(tagSearch(recipeList, searchItem));
+				console.log("tag added & prime search is layered");
 			}
 
-			setRecipeList(tagSearch(recipes, searchItem));
-			// console.log("tags only");
+			if (primarySearch.length < 3 && searchItem.length <= 1) {
+				setRecipeList(tagSearch(recipes, searchItem));
+				console.log("first tag added but prime doesnt exist");
+			}
+
+			if (primarySearch.length < 3 && searchItem.length > 1) {
+				setRecipeList(tagSearch(recipeList, searchItem));
+				console.log("second tag added but prime doesnt exist");
+			}
 		}
 
 		if (tagRemoved) {
+			setTagRemoved(false);
 			if (searchItem.length < 1 && primarySearch.length < 3) {
-				// console.log("no more tag remains");
-				setTagRemoved(false);
 				setRecipeList(recipes);
+				console.log("all tags removed & prime is invalid");
 			}
 			if (searchItem.length < 1 && primarySearch.length >= 3) {
-				setIsSearching(false);
 				setRecipeList(searchRecipes(recipes, primarySearch));
+				console.log(primarySearch);
+				console.log(
+					"tag removed but no tags remain but Prime search is valid"
+				);
 			}
 
 			if (searchItem.length >= 1) {
 				setRecipeList(tagSearch(recipes, searchItem));
+				console.log("tag removed but one tag or more remains");
 			}
 
 			if (isSearching) {
-				if (primarySearch.length <= 2) {
-					setIsSearching(false);
+				setIsSearching(false);
+				if (primarySearch.length <= 2 && searchItem.length < 1) {
 					setRecipeList(recipes);
+					console.log(
+						`user searching prime with invalid char count and no tags`
+					);
 				}
 
-				if (primarySearch.length >= 3) {
-					setIsSearching(false);
+				if (primarySearch.length >= 3 && searchItem.length) {
 					setRecipeList(searchRecipes(recipes, primarySearch));
+					setRecipeList(tagSearch(recipeList, primarySearch));
+					console.log("user is searching prime with tags enabled");
 				}
-			}
-
-			if (!isSearching && !!searchItem.length) {
-				console.log("fired");
 			}
 		}
 	}, [primarySearch, searchItem]);
@@ -118,15 +130,25 @@ function App() {
 
 	const handleSearchInput = (e, term) => {
 		setPrimarySearch(term);
+		setIsSearching(true);
 
-		if (term.length >= 3) {
-			setIsSearching(true);
+		if (term.length >= 3 && !searchItem.length) {
 			setRecipeList(searchRecipes(recipes, primarySearch));
+			console.log("prime updated and tag doesnt exist");
+		}
+		if (term.length >= 3 && searchItem.length) {
+			setRecipeList(searchRecipes(recipeList, primarySearch));
+			console.log("prime updated and tag exist");
 		}
 
 		if (term.length <= 2) {
-			setIsSearching(true);
 			setRecipeList(recipes);
+			console.log("primary search less than 2 reset");
+
+			if (searchItem.length >= 1) {
+				setRecipeList(tagSearch(recipes, searchItem));
+				console.log("prime search invalid but tag exists");
+			}
 		}
 	};
 
@@ -164,13 +186,27 @@ function App() {
 			</BtnWrapper>
 
 			<MainWrapper>
-				{recipeList.map((recipe) => {
+				{recipeList.length ? (
+					recipeList.map((recipe) => {
+						return (
+							<div className="card" key={recipe.id}>
+								<RecipeCard recipe={recipe} />
+							</div>
+						);
+					})
+				) : (
+					<h2>
+						Aucune recette ne correspond à votre critère… vous
+						pouvez chercher « tarte aux pommes », « poisson », etc.
+					</h2>
+				)}
+				{/* {recipeList.map((recipe) => {
 					return (
 						<div className="card" key={recipe.id}>
 							<RecipeCard recipe={recipe} />
 						</div>
 					);
-				})}
+				})} */}
 			</MainWrapper>
 		</>
 	);
