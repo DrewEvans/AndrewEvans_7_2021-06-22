@@ -19,6 +19,7 @@ import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
 import "./App.scss";
+// import linearSearch from "./functions/testFilter2";
 
 const MainWrapper = styled.main`
 	display: flex;
@@ -50,19 +51,16 @@ function App() {
 	useEffect(() => {
 		if (tagSelected) {
 			setTagSelected(false);
+
 			if (primarySearch.length >= 3) {
 				setRecipeList(tagSearch(recipeList, searchItem));
 				console.log("tag added & prime search is layered");
 			}
 
-			if (primarySearch.length < 3 && searchItem.length <= 1) {
-				setRecipeList(tagSearch(recipes, searchItem));
-				console.log("first tag added but prime doesnt exist");
-			}
-
-			if (primarySearch.length < 3 && searchItem.length > 1) {
-				setRecipeList(tagSearch(recipeList, searchItem));
-				console.log("second tag added but prime doesnt exist");
+			if (primarySearch.length < 3) {
+				searchItem.length <= 1
+					? setRecipeList(tagSearch(recipes, searchItem))
+					: setRecipeList(tagSearch(recipeList, searchItem));
 			}
 		}
 
@@ -151,6 +149,8 @@ function App() {
 			}
 		}
 	};
+
+	// console.log(linearSearch(recipes, primarySearch));
 
 	return (
 		<>
