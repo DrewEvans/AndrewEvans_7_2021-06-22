@@ -19,7 +19,6 @@ import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
 import "./App.scss";
-import { linearSearch } from "./functions/testFilter2";
 
 const MainWrapper = styled.main`
 	display: flex;
@@ -149,8 +148,6 @@ function App() {
 			}
 		}
 	};
-
-	console.log(linearSearch(recipes, primarySearch));
 
 	return (
 		<>
