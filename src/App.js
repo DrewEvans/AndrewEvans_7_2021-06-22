@@ -14,12 +14,12 @@ import {
 	uniqueUtensils,
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
-import { searchRecipes, tagSearch } from "./functions/testFilter";
+import { searchRecipes, tagSearch } from "./functions/searchAlgo";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
 import "./App.scss";
-// import linearSearch from "./functions/testFilter2";
+import { linearSearch } from "./functions/testFilter2";
 
 const MainWrapper = styled.main`
 	display: flex;
@@ -150,7 +150,7 @@ function App() {
 		}
 	};
 
-	// console.log(linearSearch(recipes, primarySearch));
+	console.log(linearSearch(recipes, primarySearch));
 
 	return (
 		<>
