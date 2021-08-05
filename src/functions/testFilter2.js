@@ -12,7 +12,12 @@ const binarySearch = (array, key) => {
 				middle = Math.floor((start + end) / 2);
 
 				if (
-					array[middle].name.toLowerCase().includes(key.toLowerCase())
+					array[middle].name
+						.toLowerCase()
+						.includes(key.toLowerCase()) ||
+					array[middle].description
+						.toLowerCase()
+						.includes(key.toLowerCase())
 				) {
 					keyArray.push(middle);
 					if (keyArray.length > array.length) {
@@ -20,12 +25,16 @@ const binarySearch = (array, key) => {
 					} else if (
 						array[middle + 1].name
 							.toLowerCase()
+							.includes(key.toLowerCase()) ||
+						array[middle + 1].description
+							.toLowerCase()
 							.includes(key.toLowerCase())
 					) {
 						for (let i = 1; i < array.length; i++) {
 							if (
 								key.toLowerCase() !=
-								array[middle + 1].name.toLowerCase()
+									array[middle + 1].name.toLowerCase() ||
+								array[middle + 1].description.toLowerCase()
 							) {
 								break;
 							} else {
@@ -39,12 +48,16 @@ const binarySearch = (array, key) => {
 					} else if (
 						array[middle - 1].name
 							.toLowerCase()
+							.includes(key.toLowerCase()) ||
+						array[middle - 1].description
+							.toLowerCase()
 							.includes(key.toLowerCase())
 					) {
 						for (let i = 1; i < array.length; i++) {
 							if (
 								key.toLowerCase() !=
-								array[middle - 1].name.toLowerCase()
+									array[middle - 1].name.toLowerCase() ||
+								array[middle - 1].description.toLowerCase()
 							) {
 								break;
 							} else {
@@ -54,7 +67,8 @@ const binarySearch = (array, key) => {
 					}
 					return array[keyArray];
 				} else if (
-					key.toLowerCase() > array[middle].name.toLowerCase()
+					key.toLowerCase() > array[middle].name.toLowerCase() ||
+					array[middle].description.toLowerCase()
 				) {
 					start = middle + 1;
 				} else {
@@ -64,13 +78,6 @@ const binarySearch = (array, key) => {
 			return -1;
 		}
 	}
-	// if (array[middle].name.toLowerCase().includes(key.toLowerCase())) {
-	// 	return middle;
-	// } else if (array[middle].name.toLowerCase() < key.toLowerCase()) {
-	// 	start = middle + 1;
-	// } else {
-	// 	end = middle - 1;
-	// }
 };
 
 export { binarySearch };
