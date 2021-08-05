@@ -15,6 +15,7 @@ import {
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
 import { searchRecipes, tagSearch } from "./functions/testFilter";
+import { binarySearch } from "./functions/testFilter2";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
@@ -149,6 +150,10 @@ function App() {
 			}
 		}
 	};
+
+	// let arr = ["tomate", "olive", "citron", "tomate", "olive"];
+
+	console.log(binarySearch(recipes, primarySearch));
 
 	// console.log(linearSearch(recipes, primarySearch));
 
