@@ -14,8 +14,8 @@ import {
 	uniqueUtensils,
 	uniqueRecipes,
 } from "./functions/UniqueArrays";
-import { searchRecipes, tagSearch } from "./functions/testFilter";
-import { binarySearch, linearSearch } from "./functions/testFilter2";
+import { searchRecipes, tagSearch } from "./functions/searchAlgo";
+import { binarySearch, linearSearch } from "./functions/tests";
 import { recipes } from "./data/recipes";
 import styled from "styled-components";
 
