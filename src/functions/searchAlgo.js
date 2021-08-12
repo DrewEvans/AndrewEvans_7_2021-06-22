@@ -2,7 +2,7 @@ const searchRecipes = (object, string) => {
 	let results = [];
 
 	if (string) {
-		if (string.length > 2) {
+		if (string.length >= 3) {
 			results = object
 				.filter((el) => {
 					return (

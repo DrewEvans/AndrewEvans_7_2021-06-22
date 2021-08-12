@@ -149,6 +149,25 @@ function App() {
 		}
 	};
 
+	// const compareFunction = (fn1, fn2, n = 1) => {
+	// 	console.time("Fn1");
+	// 	for (let i = 0; i < n; i++) {
+	// 		fn1;
+	// 	}
+	// 	console.timeEnd("Fn1");
+	// 	console.time("Fn2");
+	// 	for (let i = 0; i < n; i++) {
+	// 		fn2;
+	// 	}
+	// 	console.timeEnd("Fn2");
+	// };
+
+	// compareFunction(
+	// 	// linearSearch(recipes, primarySearch),
+	// 	searchRecipes(recipes, primarySearch)
+	// );
+	// console.log(searchRecipes(recipes, primarySearch));
+
 	return (
 		<>
 			<Logo />
